@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KG4FS7QV');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <title>GTM Sample Events Playground</title>
+
+  <!-- Google Tag Manager (replace GTM-XXXXXXX with your container ID) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "page_view",
+      page_name: "GTM Sample Events Page"
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #4285f4;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #3367d6;
+    }
+
+    input, select {
+      padding: 8px;
+      margin-top: 5px;
+      width: 250px;
+    }
+
+    .box {
+      height: 300px;
+      background: #f2f2f2;
+      margin-top: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KG4FS7QV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<h1>Google Tag Manager – Sample Events</h1>
+<p>Use this page to practice tracking events in GTM.</p>
+
+<!-- BUTTON CLICK -->
+<section>
+  <h2>Button Click</h2>
+  <button id="ctaButton">Click Me</button>
+</section>
+
+<!-- LINK CLICK -->
+<section>
+  <h2>Link Click</h2>
+  <a href="https://example.com" id="externalLink" target="_blank">Visit Example.com</a>
+</section>
+
+<!-- FORM SUBMIT -->
+<section>
+  <h2>Form Submit</h2>
+  <form id="sampleForm">
+    <label>Email:</label><br>
+    <input type="email" required><br><br>
+    <button type="submit">Submit Form</button>
+  </form>
+</section>
+
+<!-- INPUT CHANGE -->
+<section>
+  <h2>Input Change</h2>
+  <select id="dropdown">
+    <option value="">Select option</option>
+    <option value="option_1">Option 1</option>
+    <option value="option_2">Option 2</option>
+  </select>
+</section>
+
+<!-- FILE DOWNLOAD -->
+<section>
+  <h2>File Download</h2>
+  <a href="sample.pdf" download id="downloadLink">Download PDF</a>
+</section>
+
+<!-- VIDEO EVENTS -->
+<section>
+  <h2>Video Events</h2>
+  <video id="sampleVideo" width="400" controls>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  </video>
+</section>
+
+<!-- ECOMMERCE EVENT -->
+<section>
+  <h2>Add to Cart</h2>
+  <button id="addToCart">Add to Cart</button>
+</section>
+
+<!-- VISIBILITY EVENT -->
+<div class="box" id="visibleBox">
+  I became visible 👀
+</div>
+
+<script>
+  // BUTTON CLICK
+  document.getElementById("ctaButton").addEventListener("click", function () {
+    dataLayer.push({
+      event: "button_click",
+      button_name: "cta_button"
+    });
+  });
+
+  // LINK CLICK
+  document.getElementById("externalLink").addEventListener("click", function () {
+    dataLayer.push({
+      event: "link_click",
+      link_url: this.href
+    });
+  });
+
+  // FORM SUBMIT
+  document.getElementById("sampleForm").addEventListener("submit", function () {
+    dataLayer.push({
+      event: "form_submit",
+      form_id: "sample_form"
+    });
+  });
+
+  // INPUT CHANGE
+  document.getElementById("dropdown").addEventListener("change", function () {
+    dataLayer.push({
+      event: "input_change",
+      selected_value: this.value
+    });
+  });
+
+  // VIDEO EVENTS
+  const video = document.getElementById("sampleVideo");
+  video.addEventListener("play", function () {
+    dataLayer.push({ event: "video_play" });
+  });
+
+  video.addEventListener("pause", function () {
+    dataLayer.push({ event: "video_pause" });
+  });
+
+  // ADD TO CART (E-COMMERCE STYLE)
+  document.getElementById("addToCart").addEventListener("click", function () {
+    dataLayer.push({
+      event: "add_to_cart",
+      ecommerce: {
+        currency: "USD",
+        value: 49.99,
+        items: [{
+          item_name: "Test Product",
+          item_id: "SKU_123",
+          price: 49.99,
+          quantity: 1
+        }]
+      }
+    });
+  });
+
+  // SCROLL DEPTH
+  let scrollFired = {};
+  window.addEventListener("scroll", function () {
+    const scrollPercent = Math.round(
+      (window.scrollY + window.innerHeight) / document.body.scrollHeight * 100
+    );
+
+    [25, 50, 75, 100].forEach(function (percent) {
+      if (scrollPercent >= percent && !scrollFired[percent]) {
+        scrollFired[percent] = true;
+        dataLayer.push({
+          event: "scroll_depth",
+          scroll_percent: percent
+        });
+      }
+    });
+  });
+
+  // VISIBILITY EVENT
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        dataLayer.push({
+          event: "element_visible",
+          element_id: "visibleBox"
+        });
+        observer.disconnect();
+      }
+    });
+  });
+
+  observer.observe(document.getElementById("visibleBox"));
+
+  // TIMER EVENT
+  setTimeout(function () {
+    dataLayer.push({
+      event: "timer_10_seconds"
+    });
+  }, 10000);
+</script>
+
+</body>
+</html>
